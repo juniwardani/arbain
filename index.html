@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Tahfidz Saijaan - Kumpulan Hadits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maroon: #800000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--maroon);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            margin-bottom: 1px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .header-text {
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 100px;
+        }
+
+        .hadits-list {
+            list-style: none;
+            padding: 0 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hadits-item {
+            background: white;
+            margin-bottom: 10px;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+
+        .hadits-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .hadits-item h3 {
+            color: var(--maroon);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hadits-item h3::after {
+            content: '▼';
+            font-size: 0.8rem;
+            margin-left: auto;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .hadits-item .hadits-content.active + h3::after {
+            transform: rotate(180deg);
+        }
+
+        .hadits-content {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            border-left: 4px solid var(--maroon);
+        }
+
+        .hadits-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .hadits-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .hadits-content p strong {
+            color: var(--maroon);
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 30px;
+            height: 40px;
+            background-color: var(--maroon);
+        }
+
+        /* Styling untuk kontrol audio di Chrome & Safari */
+        audio::-webkit-media-controls-panel {
+            background-color: var(--maroon);
+        }
+
+        audio::-webkit-media-controls-play-button {
+            background-color: white;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        audio::-webkit-media-controls-timeline {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            margin: 0 10px;
+        }
+
+        audio::-webkit-media-controls-current-time-display,
+        audio::-webkit-media-controls-time-remaining-display {
+            color: white;
+        }
+
+        audio::-webkit-media-controls-volume-slider {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 0 5px;
+        }
+
+        footer {
+            background-color: var(--maroon);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 15px 90px;
+            }
+
+            .hadits-list {
+                padding: 0 5px;
+            }
+            
+            .hadits-item {
+                padding: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .hadits-content {
+                padding: 15px;
+            }
+
+            .hadits-item h3 {
+                font-size: 1.1rem;
+            }
+
+            /* Animasi ketika membuka/menutup hadits */
+            .hadits-content.active {
+                display: block;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        .hadits-urutan {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin: 5px auto;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 300px;
+        }
+
+        .hadits-urutan span:first-child {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+        }
+
+        .hadits-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pelajaran-content {
+            margin-left: 20px;
+        }
+
+        .pelajaran-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .pelajaran-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .hadits-urutan span:first-child {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+        }
+
+        .hadits-content p strong + span {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+            line-height: 2;
+            display: block;
+            margin-bottom: 10px;
+            text-align: right;
+            direction: rtl;
+        }
+
+        /* Tambahkan style untuk judul */
+        .main-title {
+            text-align: center;
+            color: var(--maroon);
+            margin: 20px 0 10px;
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'Amiri', serif;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/logo.jpg" alt="Logo Rumah Tahfidz Saijaan" class="header-logo">
+        <div class="header-text">
+            <h1>Rumah Tahfidz Saijaan</h1>
+        </div>
+    </header>
+
+    <h2 class="main-title">Hadits Arba'in Nawawiyah</h2>
+
+    <div class="container">
+        <ul class="hadits-list" id="haditsList">
+            <!-- Data hadits akan dimuat di sini -->
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Rumah Tahfidz Saijaan. All rights reserved.</p>
+    </footer>
+
+    <!-- Tambahkan script data hadits -->
+    <script src="hadist.js"></script>
+    
+    <!-- Script untuk menampilkan data -->
+    <script>
+        const haditsList = document.getElementById('haditsList');
+        
+        haditsData.forEach(hadits => {
+            const li = document.createElement('li');
+            li.className = 'hadits-item';
+            
+            li.innerHTML = `
+                <h3>
+                    ${hadits.judul}
+                    <div class="hadits-urutan">
+                        <span>${hadits.urutanarab}</span>
+                        <span>${hadits.urutanindo}</span>
+                    </div>
+                </h3>
+                <div class="hadits-content">
+                    <p><strong>Hadits:</strong> <span>${hadits.hadits}</span></p>
+                    <p><strong>Terjemahan:</strong> ${hadits.terjemahan}</p>
+                    <p><strong>Riwayat:</strong> ${hadits.riwayat.split('\n').map(line => line.trim()).filter(line => line).join('<br>')}</p>
+                    <p><strong>Syarah:</strong></p>
+                    <div class="pelajaran-content">
+                        ${hadits.pelajaran
+                            .split(/\n\n|\n/)
+                            .map(paragraph => paragraph.trim())
+                            .filter(paragraph => paragraph)
+                            .map(paragraph => `<p>${paragraph}</p>`)
+                            .join('')}
+                    </div>
+                    ${hadits.audio ? `<audio controls><source src="${hadits.audio}" type="audio/mpeg">Browser Anda tidak mendukung tag audio.</audio>` : ''}
+                </div>
+            `;
+            
+            // Tambahkan event listener untuk item
+            li.addEventListener('click', function(e) {
+                const content = this.querySelector('.hadits-content');
+                const allContents = document.querySelectorAll('.hadits-content');
+                
+                // Jika mengklik konten yang sedang terbuka, jangan lakukan apa-apa
+                if (e.target.closest('.hadits-content') && content.classList.contains('active')) {
+                    return;
+                }
+                
+                // Jika mengklik item baru, tutup yang lain
+                if (!content.classList.contains('active')) {
+                    allContents.forEach(c => {
+                        if (c !== content) {
+                            c.classList.remove('active');
+                        }
+                    });
+                }
+                
+                // Toggle konten yang diklik
+                content.classList.toggle('active');
+            });
+            
+            haditsList.appendChild(li);
+        });
+    </script>
+</body>
+</html> 
